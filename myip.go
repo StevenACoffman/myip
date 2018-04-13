@@ -1,10 +1,10 @@
-// © 2012 Steve McCoy. Licensed under the MIT license.
+package main
 
 /*
-The myip command prints all non-loopback IP addresses associated
-with the machine that it runs on, one per line.
+URL: https://gist.github.com/jniltinho/9787946
+URL: https://github.com/mccoyst/myip/blob/master/myip.go
+URL: http://changsijay.com/2013/07/28/golang-get-ip-address/
 */
-package main
 
 import (
 	"net"
@@ -20,7 +20,9 @@ func main() {
 
 	for _, a := range addrs {
 		if ipnet, ok := a.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
-			os.Stdout.WriteString(ipnet.IP.String() + "\n")
+			if ipnet.IP.To4() != nil {
+				os.Stdout.WriteString(ipnet.IP.String() + "\n")
+			}
 		}
 	}
 }
